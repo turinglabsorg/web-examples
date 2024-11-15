@@ -5,26 +5,10 @@ import { SignClientTypes } from '@walletconnect/types'
 import DoneIcon from '@mui/icons-material/Done'
 import CloseIcon from '@mui/icons-material/Close'
 import ModalStore from '@/store/ModalStore'
-import { cosmosAddresses } from '@/utils/CosmosWalletUtil'
 import { eip155Addresses } from '@/utils/EIP155WalletUtil'
-import { polkadotAddresses } from '@/utils/PolkadotWalletUtil'
-import { multiversxAddresses } from '@/utils/MultiversxWalletUtil'
-import { tronAddresses } from '@/utils/TronWalletUtil'
-import { tezosAddresses } from '@/utils/TezosWalletUtil'
-import { solanaAddresses } from '@/utils/SolanaWalletUtil'
-import { nearAddresses } from '@/utils/NearWalletUtil'
-import { kadenaAddresses } from '@/utils/KadenaWalletUtil'
 import { styledToast } from '@/utils/HelperUtil'
 import { walletkit } from '@/utils/WalletConnectUtil'
 import { EIP155_CHAINS, EIP155_SIGNING_METHODS } from '@/data/EIP155Data'
-import { COSMOS_MAINNET_CHAINS, COSMOS_SIGNING_METHODS } from '@/data/COSMOSData'
-import { KADENA_CHAINS, KADENA_SIGNING_METHODS } from '@/data/KadenaData'
-import { MULTIVERSX_CHAINS, MULTIVERSX_SIGNING_METHODS } from '@/data/MultiversxData'
-import { NEAR_CHAINS, NEAR_SIGNING_METHODS } from '@/data/NEARData'
-import { POLKADOT_CHAINS, POLKADOT_SIGNING_METHODS } from '@/data/PolkadotData'
-import { SOLANA_CHAINS, SOLANA_SIGNING_METHODS } from '@/data/SolanaData'
-import { TEZOS_CHAINS, TEZOS_SIGNING_METHODS } from '@/data/TezosData'
-import { TRON_CHAINS, TRON_SIGNING_METHODS } from '@/data/TronData'
 import ChainDataMini from '@/components/ChainDataMini'
 import ChainAddressMini from '@/components/ChainAddressMini'
 import { getChainData } from '@/data/chainsUtil'
@@ -36,13 +20,6 @@ import usePriorityAccounts from '@/hooks/usePriorityAccounts'
 import useSmartAccounts from '@/hooks/useSmartAccounts'
 import { EIP5792_METHODS } from '@/data/EIP5792Data'
 import { getWalletCapabilities } from '@/utils/EIP5792WalletUtil'
-import { bip122Addresses, bip122Wallet } from '@/utils/Bip122WalletUtil'
-import {
-  BIP122_CHAINS,
-  BIP122_EVENTS,
-  BIP122_SIGNING_METHODS,
-  IBip122ChainId
-} from '@/data/Bip122Data'
 import { EIP7715_METHOD } from '@/data/EIP7715Data'
 import { useRouter } from 'next/router'
 
@@ -79,43 +56,7 @@ export default function SessionProposalModal() {
     //eip7715
     const eip7715Chains = Object.keys(EIP155_CHAINS)
     const eip7715Methods = Object.values(EIP7715_METHOD)
-
-    // cosmos
-    const cosmosChains = Object.keys(COSMOS_MAINNET_CHAINS)
-    const cosmosMethods = Object.values(COSMOS_SIGNING_METHODS)
-
-    // Kadena
-    const kadenaChains = Object.keys(KADENA_CHAINS)
-    const kadenaMethods = Object.values(KADENA_SIGNING_METHODS)
-
-    // multiversx
-    const multiversxChains = Object.keys(MULTIVERSX_CHAINS)
-    const multiversxMethods = Object.values(MULTIVERSX_SIGNING_METHODS)
-
-    // near
-    const nearChains = Object.keys(NEAR_CHAINS)
-    const nearMethods = Object.values(NEAR_SIGNING_METHODS)
-
-    // polkadot
-    const polkadotChains = Object.keys(POLKADOT_CHAINS)
-    const polkadotMethods = Object.values(POLKADOT_SIGNING_METHODS)
-
-    // solana
-    const solanaChains = Object.keys(SOLANA_CHAINS)
-    const solanaMethods = Object.values(SOLANA_SIGNING_METHODS)
-
-    // tezos
-    const tezosChains = Object.keys(TEZOS_CHAINS)
-    const tezosMethods = Object.values(TEZOS_SIGNING_METHODS)
-
-    // tron
-    const tronChains = Object.keys(TRON_CHAINS)
-    const tronMethods = Object.values(TRON_SIGNING_METHODS)
-
-    // bip122
-    const bip122Chains = Object.keys(BIP122_CHAINS)
-    const bip122Methods = Object.values(BIP122_SIGNING_METHODS)
-    const bip122Events = Object.values(BIP122_EVENTS)
+    
 
     return {
       eip155: {
@@ -129,76 +70,6 @@ export default function SessionProposalModal() {
               .slice(0, addressesToApprove ?? eip155Addresses.length)
           )
           .flat()
-      },
-      cosmos: {
-        chains: cosmosChains,
-        methods: cosmosMethods,
-        events: [],
-        accounts: cosmosChains
-          .map(chain => cosmosAddresses.map(address => `${chain}:${address}`))
-          .flat()
-      },
-      kadena: {
-        chains: kadenaChains,
-        methods: kadenaMethods,
-        events: [],
-        accounts: kadenaChains
-          .map(chain => kadenaAddresses.map(address => `${chain}:${address}`))
-          .flat()
-      },
-      mvx: {
-        chains: multiversxChains,
-        methods: multiversxMethods,
-        events: [],
-        accounts: multiversxChains
-          .map(chain => multiversxAddresses.map(address => `${chain}:${address}`))
-          .flat()
-      },
-      near: {
-        chains: nearChains,
-        methods: nearMethods,
-        events: ['accountsChanged', 'chainChanged'],
-        accounts: nearChains
-          .map(chain => nearAddresses.map(address => `${chain}:${address}`))
-          .flat()
-      },
-      polkadot: {
-        chains: polkadotChains,
-        methods: polkadotMethods,
-        events: [],
-        accounts: polkadotChains
-          .map(chain => polkadotAddresses.map(address => `${chain}:${address}`))
-          .flat()
-      },
-      solana: {
-        chains: solanaChains,
-        methods: solanaMethods,
-        events: [],
-        accounts: solanaChains
-          .map(chain => solanaAddresses.map(address => `${chain}:${address}`))
-          .flat()
-      },
-      tezos: {
-        chains: tezosChains,
-        methods: tezosMethods,
-        events: [],
-        accounts: tezosChains
-          .map(chain => tezosAddresses.map(address => `${chain}:${address}`))
-          .flat()
-      },
-      tron: {
-        chains: tronChains,
-        methods: tronMethods,
-        events: [],
-        accounts: tronChains
-          .map(chain => tronAddresses.map(address => `${chain}:${address}`))
-          .flat()
-      },
-      bip122: {
-        chains: bip122Chains,
-        methods: bip122Methods,
-        events: bip122Events,
-        accounts: bip122Addresses
       }
     }
   }, [addressesToApprove])
@@ -261,24 +132,6 @@ export default function SessionProposalModal() {
     switch (namespace) {
       case 'eip155':
         return eip155Addresses[0]
-      case 'cosmos':
-        return cosmosAddresses[0]
-      case 'kadena':
-        return kadenaAddresses[0]
-      case 'mvx':
-        return multiversxAddresses[0]
-      case 'near':
-        return nearAddresses[0]
-      case 'polkadot':
-        return polkadotAddresses[0]
-      case 'solana':
-        return solanaAddresses[0]
-      case 'tezos':
-        return tezosAddresses[0]
-      case 'tron':
-        return tronAddresses[0]
-      case 'bip122':
-        return bip122Addresses[0]
     }
   }, [])
 
@@ -312,15 +165,6 @@ export default function SessionProposalModal() {
         let sessionProperties = {
           capabilities: JSON.stringify(capabilities)
         } as any
-        if (namespaces.bip122) {
-          const bip122Chain = namespaces.bip122.chains?.[0]!
-          sessionProperties.bip122_getAccountAddresses = JSON.stringify({
-            payment: Array.from(bip122Wallet.getAddresses(bip122Chain as IBip122ChainId).values()),
-            ordinal: Array.from(
-              bip122Wallet.getAddresses(bip122Chain as IBip122ChainId, ['ordinal']).values()
-            )
-          })
-        }
         console.log('sessionProperties', sessionProperties)
         await walletkit.approveSession({
           id: proposal.id,

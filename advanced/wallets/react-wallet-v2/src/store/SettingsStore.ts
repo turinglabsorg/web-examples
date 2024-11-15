@@ -112,52 +112,6 @@ const SettingsStore = {
     state.eip155Address = eip155Address
   },
 
-  setCosmosAddress(cosmosAddresses: string) {
-    state.cosmosAddress = cosmosAddresses
-  },
-
-  setSolanaAddress(solanaAddress: string) {
-    state.solanaAddress = solanaAddress
-  },
-
-  setPolkadotAddress(polkadotAddress: string) {
-    state.polkadotAddress = polkadotAddress
-  },
-  setNearAddress(nearAddress: string) {
-    state.nearAddress = nearAddress
-  },
-  setKadenaAddress(kadenaAddress: string) {
-    state.kadenaAddress = kadenaAddress
-  },
-  setbip122Address(bip122Address: string) {
-    state.bip122Address = bip122Address
-  },
-  setRelayerRegionURL(relayerRegionURL: string) {
-    state.relayerRegionURL = relayerRegionURL
-  },
-
-  setMultiversxAddress(multiversxAddress: string) {
-    state.multiversxAddress = multiversxAddress
-  },
-
-  setTronAddress(tronAddress: string) {
-    state.tronAddress = tronAddress
-  },
-
-  setTezosAddress(tezosAddress: string) {
-    state.tezosAddress = tezosAddress
-  },
-
-  setKernelSmartAccountAddress(smartAccountAddress: string) {
-    state.kernelSmartAccountAddress = smartAccountAddress
-  },
-  setSafeSmartAccountAddress(smartAccountAddress: string) {
-    state.safeSmartAccountAddress = smartAccountAddress
-  },
-  setBiconomySmartAccountAddress(smartAccountAddress: string) {
-    state.biconomySmartAccountAddress = smartAccountAddress
-  },
-
   setActiveChainId(value: string) {
     state.activeChainId = value
   },
